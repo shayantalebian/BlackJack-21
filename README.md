@@ -6,7 +6,7 @@ This project is on of the most famous game in casiono called BlackJack or known 
 
 This project will run in terminal only(for now) and the logic and rules are same as the general and official BlackJack game.
 
-\*\* keep in mind : the only different with the casino is that the game will not considered the lower possibility of used cards.
+\*\*keep in mind : the only different with the casino is that the game will not considered the lower possibility of used cards.
 
 ## More About this project
 
