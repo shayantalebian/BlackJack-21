@@ -15,6 +15,7 @@ sayN = False
 def cardChoose():
         return random.choice(cards)
 
+#TODO - You must fix the bug of if the user hand was two Ace(11)
 while blackjack == True:
     gameOn = input("Do you want to play a game of BlackJack21? Type 'y' or 'n': ").lower()
     print("\n" * 200) # Clear the terminal
@@ -22,6 +23,7 @@ while blackjack == True:
     computerWin = False
     userCards = []
     computerCards = []
+    cardGiving = True
 
     if gameOn == "n":
         blackjack = False  
@@ -50,36 +52,51 @@ while blackjack == True:
             for card in userCards:
                 userScore += card
             if userScore > 21:
-                userWin = False
-                computerWin = True
-            print(f"Your cards are: {userCards} and your score is: {userScore}")
-            print(f"Comptuter's first card: {computerCards[0]}")
+                if 11 in userCards:
+                    userCards[userCards.index(11)] = 1
+                    userScore = 0
+                    for card in userCards:
+                        userScore += card
+                    print(f"Your cards are: {userCards} and your score is: {userScore}")
+                    print(f"Compter's first card: {computerCards[0]}")
+                else:
+                    userWin = False
+                    computerWin = True
+                    print(f"Your cards are: {userCards} and your score is: {userScore}")
+                    print(f"Computer's final hand is: {computerCards} and it's score was: {computerScore}")
+                    print("YOU LOSE!, Your score is above 21.")
+                    break
+            else:
+                print(f"Your cards are: {userCards} and your score is: {userScore}")
+                print(f"Comptuter's first card: {computerCards[0]}")
+                    
 
         elif userChose == "n":
+            cardGiving = False
             sayN = True
             while computerScore < 17:
                 computerCards.append(cardChoose())
                 computerScore = 0
                 for card in computerCards:
                     computerScore += card
-            
 
             print(f"Your final hand is: {userCards} and your score is: {userScore}")
-            print(f"Computer's final hand is: {computerCards} and computer's final score is: {computerScore}")
+            print(f"Computer's final hand is: {computerCards} and it's final score is: {computerScore}")
             
-            
-        if (userWin == True or computerScore > 21) and userScore > computerScore:
-            if sayN == False:
-                print(f"Computer's final hand is: {computerCards} and computer's final score is: {computerScore}")
-            print("You win!")
-            break
-        elif (computerWin == True or userScore > 21) and computerScore > userScore:
-            if sayN == False:
-                print(f"Computer's final hand is: {computerCards} and computer's final score is: {computerScore}")
-            print("Computer won!")       
-            break
-        elif (userScore == computerScore) and (userScore <= 21 and computerScore <= 21):
-            print("It's draw!!!")
-            break
-
-            
+            if (computerScore > 21):
+                print("YOU WIN!, Computer hand is above 21!")
+            elif (userScore > computerScore):
+                if 10 in userCards and 11 in userCards:
+                    print("YOU WIN!, Your hand was BlackJack!")
+                else:
+                    print("YOU WIN!, Your hand is greater than the computer.")
+            elif computerScore > userScore:
+                if 10 in computerCards and 11 in computerCards:
+                    print("YOU LOSE!, Computer hand was BlackJack!")
+                else:
+                    print("YOU LOSE!, Computer hand is greater than yours.")
+            elif computerScore == userScore:
+                if (10 in computerCards) and (11 in computerCards) and (10 in userCards) and (11 in userCards):
+                    print("IT IS A DRAW! But with a two hand of BlackJack!!!")
+                else:
+                    print("IT IS A DRAW!")
