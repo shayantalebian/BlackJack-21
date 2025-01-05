@@ -8,7 +8,6 @@ blackjack = True
 def cardChoose():
         return random.choice(cards)
 
-#TODO - You must fix the bug of if the user hand was two Ace(11)
 while blackjack == True:
     gameOn = input("Do you want to play a game of BlackJack21? Type 'y' or 'n': ").lower()
     print("\n" * 200) # Clear the terminal
@@ -24,8 +23,13 @@ while blackjack == True:
         userCards.append(cardChoose())
         computerCards.append(cardChoose())
     userScore = sum(userCards)
-
+        
     computerScore = sum(computerCards)
+    if 11 in userCards or 11 in computerCards:
+        if userCards[0] == 11 and userCards[1] == 11:
+            userCards[1] = 1
+        elif computerCards[0] == 11 and computerCards[1] == 11:
+            computerCards[1] = 1
 
     print(logo)
     print(f"Your cards: {userCards}, current score: {userScore}")
